@@ -1,0 +1,20 @@
+parameters:
+  syzygy.entities.delimiter:  "/* ================================ CUT HERE ================================ */"
+  syzygy.entities.ending:     "}\n"
+  syzygy.entities.fixes:
+    - ["~\G {4}~", "\t"] # convert leading spaces to tabs
+#    - ["~^(\h*)private~", "${1}protected"] # changing private modifiers to protected
+    - ["~^(\h*)(private\h+\$\w+;)$~", "${1}/*${2}*/"] # comment out inherited fields
+    - ["~^\h+$~", ""] # truncate empty lines
+    - ["~^}$~", "}\n"] # add newline at the end of file
+  translator.class:
+    Syzygy\DevBundle\Component\Translation\RegisteringTranslator
+
+services:
+  syzygy.translator.registeringStub:
+    class: Syzygy\DevBundle\Component\Translation\RegisteringTranslatorStub
+    arguments:
+      - @translator.default
+      - @logger
+  translator:
+    alias: syzygy.translator.registeringStub
