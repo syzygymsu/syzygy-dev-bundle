@@ -6,6 +6,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class RegisteringTranslatorStub implements TranslatorInterface {
+
 	/**
 	 * @var TranslatorInterface
 	 */
@@ -14,7 +15,7 @@ class RegisteringTranslatorStub implements TranslatorInterface {
 	public function __construct(TranslatorInterface $translator, LoggerInterface $logger) {
 		$this->translator = $translator;
 
-		if($translator instanceof RegisteringTranslator) {
+		if ($translator instanceof RegisteringTranslator) {
 			$translator->setLogger($logger);
 		}
 	}

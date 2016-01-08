@@ -3,6 +3,7 @@
 namespace Syzygy\DevBundle\Component\Translation;
 
 class RegisteringMessageCatalogue extends \Symfony\Component\Translation\MessageCatalogue {
+
 	/**
 	 * @var RegisteringTranslator
 	 */

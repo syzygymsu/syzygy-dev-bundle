@@ -6,6 +6,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 
 class RegisteringTranslator extends Translator {
+
 	/**
 	 * @var LoggerInterface
 	 */
@@ -27,7 +28,7 @@ class RegisteringTranslator extends Translator {
 	}
 
 	public function reportMissingTranslation($id, $domain, $locale) {
-		if($this->logger) {
+		if ($this->logger) {
 			$this->logger->notice(sprintf('Translation missing: `%s` (%s) {%s}', $id, $domain, $locale));
 		}
 	}

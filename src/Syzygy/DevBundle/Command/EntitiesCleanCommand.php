@@ -10,12 +10,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class EntitiesCleanCommand extends AbstractEntitiesCommand {
+
 	protected function configure() {
 		$this
-			->setName('syzygy:entities:clean')
+				->setName('syzygy:entities:clean')
 				->setDescription('Clears old auto-generated content in entities')
-			->addArgument('name', InputArgument::REQUIRED, 'A bundle name, a namespace, or a class name')
-			->addOption('path', null, InputOption::VALUE_REQUIRED, 'The path where to generate entities when it cannot be guessed')
+				->addArgument('name', InputArgument::REQUIRED, 'A bundle name, a namespace, or a class name')
+				->addOption('path', null, InputOption::VALUE_REQUIRED, 'The path where to generate entities when it cannot be guessed')
 		;
 	}
 
@@ -31,7 +32,7 @@ class EntitiesCleanCommand extends AbstractEntitiesCommand {
 			$name = strtr($input->getArgument('name'), '/', '\\');
 
 			if (false !== $pos = strpos($name, ':')) {
-				$name = $this->getContainer()->get('doctrine')->getAliasNamespace(substr($name, 0, $pos)).'\\'.substr($name, $pos + 1);
+				$name = $this->getContainer()->get('doctrine')->getAliasNamespace(substr($name, 0, $pos)) . '\\' . substr($name, $pos + 1);
 			}
 
 			if (class_exists($name)) {
@@ -56,29 +57,29 @@ class EntitiesCleanCommand extends AbstractEntitiesCommand {
 
 			$res = $this->clearEntity($m, $entityMetadata->getPath());
 
-			if(!$res) {
+			if (!$res) {
 				$output->writeln(sprintf('> FAILED'));
 			}
 		}
 	}
 
 	public function clearEntity(ClassMetadata $metadata, $path) {
-		$file_path = $path. '/'. str_replace('\\', DIRECTORY_SEPARATOR, $metadata->getName()) . '.php';
-		if(!file_exists($file_path)) {
+		$file_path = $path . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $metadata->getName()) . '.php';
+		if (!file_exists($file_path)) {
 			throw new \Exception(sprintf('Failed to locate file for %s', $metadata->getName()));
 		}
 
 		$hf = fopen($file_path, 'c+');
 
-		while(true) {
+		while (true) {
 			$s = fgets($hf);
-			if(false === $s) {
+			if (false === $s) {
 				// Target delimiter not found in file
 				fclose($hf);
 				return false;
 			}
 
-			if(false !== strpos($s, $this->getDelimiter())) {
+			if (false !== strpos($s, $this->getDelimiter())) {
 				break;
 			}
 		}
@@ -88,4 +89,5 @@ class EntitiesCleanCommand extends AbstractEntitiesCommand {
 
 		return true;
 	}
+
 }

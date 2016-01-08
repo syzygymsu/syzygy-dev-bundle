@@ -5,6 +5,7 @@ namespace Syzygy\DevBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 abstract class AbstractEntitiesCommand extends ContainerAwareCommand {
+
 	/**
 	 * @return \Symfony\Bundle\FrameworkBundle\Console\Application
 	 */
@@ -23,4 +24,5 @@ abstract class AbstractEntitiesCommand extends ContainerAwareCommand {
 	public function getFixes() {
 		return $this->getContainer()->getParameter('syzygy.entities.fixes');
 	}
+
 }
