@@ -1,0 +1,9 @@
+framework:
+    secret: ""
+
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+
+    orm:
+        auto_mapping: true
